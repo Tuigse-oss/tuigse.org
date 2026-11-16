@@ -432,6 +432,32 @@ main > .entry + .radio { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
 .verify > .code { margin-top: 0.5rem; max-width: 52rem; }
 .verify > .aside { margin-top: 1.5rem; font-size: 1.05rem; color: var(--ink-soft); }
 
+/* Document pages (code signing policy) ------------------------------------ */
+
+.doc {
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 4rem) var(--gutter) 0;
+}
+.doc > * { max-width: 42rem; }
+.doc h1 { font-size: clamp(2.4rem, 1.6rem + 3vw, 3.6rem); letter-spacing: -0.015em; }
+.doc-lede { margin-top: 1rem; font-size: 1.3rem; }
+/* Class-qualified so it beats the homepage's `main > section` frame. */
+.doc > section { max-width: 42rem; margin: 2.75rem 0 0; padding-inline: 0; }
+.doc h2 { font-size: clamp(1.6rem, 1.3rem + 1vw, 2rem); }
+.doc section > p, .doc section > ul, .doc section > dl, .doc section > blockquote { margin-top: 0.9rem; }
+.doc-facts > div { grid-template-columns: 13rem minmax(0, 1fr); }
+.doc-quote {
+  margin: 0.9rem 0 0;
+  padding: 0.2rem 0 0.2rem 1.1rem;
+  border-left: 3px solid var(--verdigris);
+  font-style: italic;
+}
+
+@media (max-width: 52rem) {
+  .doc-facts > div { grid-template-columns: minmax(0, 1fr); gap: 0; }
+}
+
 /* Footer ------------------------------------------------------------------ */
 
 .site-footer {

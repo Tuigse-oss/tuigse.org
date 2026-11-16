@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Code signing policy: Tuigse</title>
+  <meta name="description" content="How Tuigse plans to sign the Windows releases of Hivemend, Topos and OpenIRC, who will approve signing requests, and what the apps send over the network.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f2f5f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1c19" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://tuigse.org/code-signing-policy.html">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preload" href="assets/fonts/alegreya-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Tuigse home">
+      <img src="assets/img/tuigse-emblem-256.png" width="40" height="40" alt="">
+      <span>Tuigse</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="./#opencb">OpenCB Radio</a>
+      <a href="./#apps">Apps</a>
+      <a href="https://github.com/Tuigse-oss">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="main" class="doc">
+    <h1>Code signing policy</h1>
+
+    <p class="doc-lede">Free code signing provided by <a href="https://about.signpath.io">SignPath.io</a>, certificate by <a href="https://signpath.org">SignPath Foundation</a>.</p>
+
+    <section aria-labelledby="status">
+      <h2 id="status">Status</h2>
+      <p>No release is signed yet. We are applying to SignPath Foundation, and this policy describes how signing will work once each project is accepted. Until then, the checksums and build attestations described under <a href="./#verify">Check a download before you run it</a> show that a file is the one the repository built.</p>
+    </section>
+
+    <section aria-labelledby="what">
+      <h2 id="what">What will be signed</h2>
+      <p>The Windows programs and installers of <a href="https://github.com/Tuigse-oss/HiveMend">Hivemend</a>, <a href="https://github.com/Tuigse-oss/Topos">Topos</a> and <a href="https://github.com/Tuigse-oss/OpenIRC">OpenIRC</a>, and nothing else. Each will be built by its repository's release workflow on GitHub from a version tag, and a maintainer will approve each signing request before SignPath signs it. No third-party program, and nothing built outside those workflows, will be signed under this certificate.</p>
+      <p>OpenCB Radio runs in the browser, so it has nothing to sign.</p>
+    </section>
+
+    <section aria-labelledby="roles">
+      <h2 id="roles">Team roles</h2>
+      <dl class="facts doc-facts">
+        <div><dt>Committers and reviewers</dt><dd><a href="https://github.com/bradwilliamson">Brad Williamson</a></dd></div>
+        <div><dt>Approvers</dt><dd><a href="https://github.com/bradwilliamson">Brad Williamson</a></dd></div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="privacy">
+      <h2 id="privacy">Privacy policy</h2>
+      <p>Each of these programs follows this policy:</p>
+      <blockquote class="doc-quote"><p>This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.</p></blockquote>
+      <ul class="features">
+        <li><strong>Hivemend</strong> contains no networking code.</li>
+        <li><strong>Topos</strong> contains no network code. See its <a href="https://github.com/Tuigse-oss/Topos/blob/HEAD/PRIVACY.md">privacy notes</a>.</li>
+        <li><strong>OpenIRC</strong> connects to the IRC servers, proxies and DCC peers you choose. When you click Update in the network directory, it downloads a public list of IRC networks from raw.githubusercontent.com over HTTPS, not through your IRC proxy. Web links and searches open in your browser, and scripts you add can run commands for you. Its ident server is off unless you turn it on, and the program has no telemetry and never checks for updates to itself.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="questions">
+      <h2 id="questions">Questions</h2>
+      <p>To report a problem with a signed file, open an issue on the app's GitHub page, or for a security problem follow its <code>SECURITY.md</code>. For anything else, email <a href="mailto:bwilliamson@tuigse.org">bwilliamson@tuigse.org</a>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-about">
+      <p class="footer-name">Tuigse LLC</p>
+      <p>A small software company in the United States.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://github.com/Tuigse-oss">github.com/Tuigse-oss</a></li>
+      <li><a href="code-signing-policy.html">Code signing policy</a></li>
+    </ul>
+    <p class="footer-fine">© 2026 Tuigse LLC</p>
+  </footer>
+</body>
+</html>
