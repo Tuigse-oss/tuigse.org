@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
-  <title>Tuigse</title>
-  <meta name="description" content="Tuigse LLC makes OpenCB Radio, a CB radio for the browser, and free open-source apps for Windows and Linux: Hivemend, Topos and OpenIRC.">
+  <title>Tuigse: OpenCB Radio and open-source apps for Windows and Linux</title>
+  <meta name="description" content="Tuigse LLC makes OpenCB Radio, a CB radio simulator for the browser, and free open-source apps for Windows and Linux: Hivemend, Topos and OpenIRC.">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#f2f5f1" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0f1c19" media="(prefers-color-scheme: dark)">
@@ -14,7 +14,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tuigse.org/">
   <meta property="og:title" content="Tuigse">
-  <meta property="og:description" content="OpenCB Radio, a CB radio for the browser, and free open-source apps for Windows and Linux.">
+  <meta property="og:description" content="OpenCB Radio, a CB radio simulator for the browser, and free open-source apps for Windows and Linux.">
   <meta property="og:image" content="https://tuigse.org/assets/img/opencb-radio.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="assets/fonts/alegreya-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -43,8 +43,15 @@
         <p class="gloss">understanding; discernment.</p>
       </div>
       <div class="entry-aside">
-        <img class="entry-mark" src="assets/img/tuigse-emblem-256.png" width="128" height="128" alt="">
-        <p class="lede">Tuigse LLC makes software that explains itself: <a href="#opencb">a CB radio that runs in your browser</a>, and <a href="#apps">free apps for Windows and Linux</a> whose source, builds and behavior anyone can check.</p>
+        <p class="lede">Tuigse LLC makes software that explains itself, with source, builds and behavior anyone can check.</p>
+        <nav class="index" aria-label="Products">
+          <ul>
+            <li><a href="#opencb">OpenCB Radio</a> <span>CB radio simulator, in your browser</span></li>
+            <li><a href="#hivemend">Hivemend</a> <span>Cleans up after uninstalled programs, Windows</span></li>
+            <li><a href="#topos">Topos</a> <span>Disk-space treemap, Windows</span></li>
+            <li><a href="#openirc">OpenIRC</a> <span>IRC client, Windows and Linux</span></li>
+          </ul>
+        </nav>
       </div>
     </section>
 
@@ -52,7 +59,7 @@
       <div class="radio-intro">
         <div>
           <h2 id="opencb-title">OpenCB Radio</h2>
-          <p class="summary">A CB radio in your browser. Set your location, pick one of 40 channels, hold to talk, and hear the stations in range.</p>
+          <p class="summary">A CB radio simulator in your browser. Pick one of 40 channels, hold to talk, and hear other OpenCB users in range. It runs over the internet, not on the air, so you need no radio.</p>
         </div>
         <p class="actions"><a class="button" href="https://radio.opencbradio.com/">Open the radio</a></p>
       </div>
@@ -60,13 +67,18 @@
         <img src="assets/img/opencb-radio.jpg" width="2368" height="804"
              alt="The OpenCB Ranger 2000DX faceplate: a red display reading 27.1850 MHz, signal and mic meters, channel 19 on standby, and knobs for volume, squelch and RF gain.">
       </figure>
-      <ul class="features radio-features">
-        <li>Channel 9 for emergencies, 19 for the highway, and 6 for skip calling.</li>
-        <li>Who you hear depends on distance and on propagation conditions, as on a real set.</li>
-        <li>NOAA weather and alerts for where you are, plus traffic alerts on the map.</li>
-        <li>AM, LSB and USB, with the meters and knobs of a classic base station.</li>
-        <li>Works on phones and desktops, with nothing to install.</li>
-      </ul>
+      <div class="radio-detail">
+        <ul class="features radio-features">
+          <li>Simulated range: who you hear depends on the distance between stations and on modeled propagation conditions, including skip.</li>
+          <li>Channels follow CB custom: 19 for the highway, 6 for skip calling, 9 for emergencies. Channel 9 reaches other OpenCB users only, never emergency services.</li>
+          <li>NOAA weather and alerts for where you are, plus traffic alerts on the map.</li>
+          <li>AM, LSB and USB, with the meters and knobs of a classic base station.</li>
+        </ul>
+        <dl class="facts">
+          <div><dt>Runs on</dt><dd>A current browser, on a phone or a desktop</dd></div>
+          <div><dt>Availability</dt><dd>Free web app, nothing to install</dd></div>
+        </dl>
+      </div>
     </section>
 
     <section id="apps" class="apps" aria-labelledby="apps-title">
@@ -78,24 +90,32 @@
       <article class="app" id="hivemend" aria-labelledby="hivemend-title">
         <div class="app-copy">
           <h3 id="hivemend-title">Hivemend</h3>
-          <p class="app-kind">Registry cleaner for Windows 10 and 11</p>
-          <p>Finds registry entries, shortcuts and temp files left behind by programs you have removed, and shows you each one before anything changes.</p>
+          <p class="app-kind">Cleans up after uninstalled programs</p>
+          <dl class="facts">
+            <div><dt>Runs on</dt><dd>Windows 10 and 11, 64-bit</dd></div>
+            <div><dt>Latest release</dt><dd><!-- version Tuigse-oss/HiveMend -->0.1.6, released November 16, 2026<!-- /version --></dd></div>
+          </dl>
+          <p>Programs you remove often leave registry entries, shortcuts and temp files behind. Hivemend finds them, lists each one with the reason it was flagged, and removes only what you choose.</p>
           <ul class="features">
-            <li>Saves every entry to a .reg backup before removing it, inside its own registry transaction. Restore puts it back.</li>
-            <li>Leaves alone anything it cannot prove is stale.</li>
-            <li>Also manages startup items, installed programs, services, disk space and duplicate files.</li>
-            <li>Contains no networking code.</li>
+            <li>Each of its checks looks for one kind of leftover: mostly entries and shortcuts whose file, folder or program is gone, plus temp files more than a day old.</li>
+            <li>Never removes Winlogon or services entries, file associations you chose, Windows' own files, or built-in protocols.</li>
+            <li>Saves each registry entry to a .reg backup before removing it, inside its own registry transaction. Restore puts it back.</li>
+            <li>Also manages startup items, installed programs, services, disk space and duplicate files. Contains no networking code.</li>
           </ul>
           <div class="get">
-            <!-- release Tuigse-oss/HiveMend -->
-            <p class="release">Version 0.1.6, released November 16, 2026</p>
-            <a class="button" href="https://github.com/Tuigse-oss/HiveMend/releases/latest">Download for Windows</a>
-            <!-- /release -->
-            <a class="source" href="https://github.com/Tuigse-oss/HiveMend">Source on GitHub</a>
+            <!-- download Tuigse-oss/HiveMend -->
+            <p class="downloads">
+              <a class="button" href="https://github.com/Tuigse-oss/HiveMend/releases/download/v0.1.6/Hivemend-v0.1.6-x86_64-setup.exe">Download installer <span class="size">(3.7 MB)</span></a>
+              <a class="button button-quiet" href="https://github.com/Tuigse-oss/HiveMend/releases/download/v0.1.6/Hivemend-v0.1.6-x86_64-windows.zip">Portable zip <span class="size">(2.2 MB)</span></a>
+            </p>
+            <p class="note">Not code-signed yet, so Windows may show a SmartScreen warning. <a href="#verify">Check the file before you run it</a>.</p>
+            <p class="note"><a href="https://github.com/Tuigse-oss/HiveMend/releases/tag/v0.1.6">Release notes and all files</a></p>
+            <!-- /download -->
           </div>
           <p class="also">Or install with <a href="https://scoop.sh">Scoop</a>:</p>
           <pre class="code"><code>scoop bucket add hivemend <span class="nowrap">https://github.com/Tuigse-oss/scoop-hivemend</span>
 scoop install hivemend</code></pre>
+          <p class="more"><a href="https://github.com/Tuigse-oss/HiveMend">Source code</a> <a href="https://github.com/Tuigse-oss/HiveMend/issues">Report a problem</a></p>
         </div>
         <figure class="app-shot">
           <a href="assets/img/hivemend-wiki-home.png">
@@ -108,20 +128,24 @@ scoop install hivemend</code></pre>
       <article class="app" id="topos" aria-labelledby="topos-title">
         <div class="app-copy">
           <h3 id="topos-title">Topos</h3>
-          <p class="app-kind">Disk-space treemap for Windows 10 and 11</p>
+          <p class="app-kind">Disk-space treemap</p>
+          <dl class="facts">
+            <div><dt>Runs on</dt><dd>Windows 10 and 11, 64-bit and 32-bit</dd></div>
+            <div><dt>Latest release</dt><dd><!-- version Tuigse-oss/Topos -->Not released yet<!-- /version --></dd></div>
+          </dl>
           <p>Shows every folder and file on a drive as a tile sized by the space it takes, nested inside its folder. Zoom in like a map, then open or delete straight from it.</p>
           <ul class="features">
-            <li>Scans a whole C: drive, 2.2 million files, in about four seconds.</li>
+            <li>Maps a whole C: drive of 2.2 million files in about 5 seconds the first time, and shows the last map in under a second on later starts. <a href="https://github.com/Tuigse-oss/Topos/blob/HEAD/docs/performance.md">Measured on one test machine</a> with a warm cache.</li>
             <li>Colors tiles by depth or by file type: video, audio, images, archives and more.</li>
             <li>Deletes only to the Recycle Bin, after asking.</li>
-            <li>A 1.8 MB native program, 64-bit and 32-bit, with no network code.</li>
+            <li>A 1.8 MB native program with no network code.</li>
           </ul>
           <div class="get">
-            <!-- release Tuigse-oss/Topos -->
-            <p class="release">No release yet. You can build it from source today.</p>
-            <!-- /release -->
-            <a class="source" href="https://github.com/Tuigse-oss/Topos">Source on GitHub</a>
+            <!-- download Tuigse-oss/Topos -->
+            <p class="note">No release yet. <a href="https://github.com/Tuigse-oss/Topos#readme">Build it from source</a> with a current Rust toolchain.</p>
+            <!-- /download -->
           </div>
+          <p class="more"><a href="https://github.com/Tuigse-oss/Topos">Source code</a> <a href="https://github.com/Tuigse-oss/Topos/issues">Report a problem</a></p>
         </div>
         <figure class="app-shot">
           <a href="assets/img/topos-light.png">
@@ -137,15 +161,22 @@ scoop install hivemend</code></pre>
       <article class="app app-text-only" id="openirc" aria-labelledby="openirc-title">
         <div class="app-copy">
           <h3 id="openirc-title">OpenIRC</h3>
-          <p class="app-kind">IRC client for Windows and Linux</p>
+          <p class="app-kind">IRC client</p>
+          <dl class="facts">
+            <div><dt>Runs on</dt><dd>Windows; Linux if you build it from source</dd></div>
+            <div><dt>Latest release</dt><dd><!-- version Tuigse-oss/OpenIRC -->0.1.0, released November 16, 2026<!-- /version --></dd></div>
+          </dl>
           <p>A native desktop client that keeps your servers, channels and private chats in one window, with a nick list and a docked panel for highlights.</p>
           <div class="get">
-            <!-- release Tuigse-oss/OpenIRC -->
-            <p class="release">Version 0.1.0, released November 16, 2026</p>
-            <a class="button" href="https://github.com/Tuigse-oss/OpenIRC/releases/latest">Download for Windows</a>
-            <!-- /release -->
-            <a class="source" href="https://github.com/Tuigse-oss/OpenIRC">Source on GitHub</a>
+            <!-- download Tuigse-oss/OpenIRC -->
+            <p class="downloads">
+              <a class="button" href="https://github.com/Tuigse-oss/OpenIRC/releases/download/v0.1.0/OpenIRC-v0.1.0-x86_64-windows.zip">Download portable zip <span class="size">(9.5 MB)</span></a>
+            </p>
+            <p class="note">Not code-signed yet, so Windows may show a SmartScreen warning. <a href="#verify">Check the file before you run it</a>.</p>
+            <p class="note"><a href="https://github.com/Tuigse-oss/OpenIRC/releases/tag/v0.1.0">Release notes and all files</a></p>
+            <!-- /download -->
           </div>
+          <p class="more"><a href="https://github.com/Tuigse-oss/OpenIRC">Source code</a> <a href="https://github.com/Tuigse-oss/OpenIRC/issues">Report a problem</a></p>
         </div>
         <ul class="features features-wide">
           <li>TLS with per-host certificate pinning, SASL, NickServ and client certificates.</li>
@@ -160,19 +191,27 @@ scoop install hivemend</code></pre>
 
     <section id="verify" class="verify" aria-labelledby="verify-title">
       <h2 id="verify-title">Check a download before you run it</h2>
-      <p>Each release is built by public CI from a tagged commit, and published with a <code>SHA256SUMS.txt</code> file and a GitHub build attestation. The apps are not code-signed yet, so Windows SmartScreen may warn you. These commands confirm that the file is the one the repository built:</p>
+      <p>Each release is built by public CI from a tagged commit, and published with a <code>SHA256SUMS.txt</code> file and a GitHub build attestation. The apps are not code-signed yet, so Windows SmartScreen may warn you. In PowerShell, in the folder you downloaded to, the first command prints a hash to compare with <code>SHA256SUMS.txt</code> on the release page, and the second, which needs the <a href="https://cli.github.com">GitHub CLI</a>, confirms the repository's workflow built the file.</p>
+      <h3 class="verify-app">Hivemend</h3>
       <!-- verify Tuigse-oss/HiveMend -->
       <pre class="code"><code>Get-FileHash .\Hivemend-v0.1.6-x86_64-setup.exe
 gh attestation verify Hivemend-v0.1.6-x86_64-setup.exe --repo Tuigse-oss/HiveMend</code></pre>
       <!-- /verify -->
-      <p>The first prints a hash to compare with <code>SHA256SUMS.txt</code> on the release page. The second needs the <a href="https://cli.github.com">GitHub CLI</a>.</p>
+      <h3 class="verify-app">OpenIRC</h3>
+      <!-- verify Tuigse-oss/OpenIRC -->
+      <pre class="code"><code>Get-FileHash .\OpenIRC-v0.1.0-x86_64-windows.zip
+gh attestation verify OpenIRC-v0.1.0-x86_64-windows.zip --repo Tuigse-oss/OpenIRC</code></pre>
+      <!-- /verify -->
+      <p class="aside">These checks show where and how a file was built. They don't make a program safe by themselves, which is why the source is open for anyone to read.</p>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p class="footer-name">Tuigse LLC</p>
+    <div class="footer-about">
+      <p class="footer-name">Tuigse LLC</p>
+      <p>A small software company in the United States. For a bug or a feature request, open an issue on the app's GitHub page. For anything else, email <a href="mailto:bwilliamson@tuigse.org">bwilliamson@tuigse.org</a>.</p>
+    </div>
     <ul class="footer-links">
-      <li><a href="mailto:bwilliamson@tuigse.org">bwilliamson@tuigse.org</a></li>
       <li><a href="https://github.com/Tuigse-oss">github.com/Tuigse-oss</a></li>
       <li><a href="https://radio.opencbradio.com/">radio.opencbradio.com</a></li>
     </ul>

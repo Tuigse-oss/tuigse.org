@@ -195,7 +195,7 @@ h2 {
 
 .button {
   display: inline-block;
-  padding: 0.7rem 1.3rem 0.75rem;
+  padding: 0.7rem 1.1rem 0.75rem;
   border-radius: 4px;
   background: var(--verdigris);
   color: var(--on-verdigris);
@@ -230,9 +230,6 @@ h2 {
   grid-template-columns: minmax(0, 1fr);
 }
 
-/* The emblem only appears beside the entry on wide screens; on narrow
-   ones the header's copy is close enough. */
-.entry-mark { display: none; }
 
 @media (min-width: 64rem) {
   .entry {
@@ -241,14 +238,26 @@ h2 {
     align-items: end;
     column-gap: clamp(3rem, 8vw, 7rem);
   }
-  .entry .lede { margin-top: 0; margin-bottom: 0.55rem; }
-  .entry-mark {
-    display: block;
-    width: 128px;
-    height: 128px;
-    margin-bottom: 1.75rem;
-  }
+  .entry .lede { margin-top: 0; }
+  .entry-aside { margin-bottom: 0.55rem; }
 }
+
+/* Product index: every product reachable from the first screen. */
+.index { margin-top: 1.4rem; }
+.index ul { list-style: none; padding: 0; margin: 0; }
+.index li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0 1rem;
+  padding: 0.45rem 0;
+  border-top: 1px solid var(--rule);
+}
+.index li:last-child { border-bottom: 1px solid var(--rule); }
+.index a { font-weight: 700; font-size: 1.15rem; text-decoration: none; }
+.index a:hover { text-decoration: underline; }
+.index span { font-family: var(--sans); font-size: 1rem; color: var(--ink-soft); }
 
 /* The hero sits closer to the radio so the faceplate starts above the fold. */
 main > .entry + .radio { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
@@ -304,12 +313,29 @@ main > .entry + .radio { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
   gap: 1.5rem 3rem;
 }
 
+.radio-detail { margin-top: 2rem; }
 .radio-features {
-  margin-top: 2rem;
   max-width: none;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: clamp(2rem, 5vw, 4.5rem);
 }
+.radio-detail .facts {
+  margin-top: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+/* Facts: the same short answers for every product. */
+.facts {
+  margin: 1rem 0 0;
+  display: grid;
+  gap: 0.3rem;
+  font-family: var(--sans);
+  font-size: 1.02rem;
+}
+.facts > div { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 1rem; }
+.facts dt { color: var(--ink-soft); }
+.facts dd { margin: 0; font-variant-numeric: lining-nums; }
 
 .radio-shot {
   margin-top: 2.25rem;
@@ -347,23 +373,28 @@ main > .entry + .radio { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
 .app-copy > p:not(.app-kind):not(.also) { margin-top: 1.1rem; }
 .app-copy > .features { margin-top: 1.2rem; }
 
-.get {
-  margin-top: 1.75rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem 1.4rem;
-  font-family: var(--sans);
+.get { margin-top: 1.6rem; font-family: var(--sans); }
+.downloads { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.button .size { font-weight: 400; font-size: 0.92em; font-variant-numeric: lining-nums; }
+.button-quiet {
+  background: transparent;
+  color: var(--verdigris);
+  box-shadow: inset 0 0 0 1.5px var(--verdigris);
 }
-.release {
-  flex-basis: 100%;
-  font-size: 1rem;
-  color: var(--ink-soft);
-  font-variant-numeric: lining-nums;
-}
-.source { font-weight: 500; font-size: 1.05rem; }
+.note { margin-top: 0.6rem; font-size: 1rem; color: var(--ink-soft); }
+.downloads + .note { margin-top: 0.85rem; }
 
 .also { margin-top: 1.25rem; font-family: var(--sans); font-size: 1rem; color: var(--ink-soft); }
+
+.more {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 1.02rem;
+}
 
 .app-shot img {
   width: 100%;
@@ -392,8 +423,14 @@ main > .entry + .radio { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
 /* Verify ------------------------------------------------------------------ */
 
 .verify > p { max-width: var(--measure); margin-top: 1rem; }
-.verify > .code { margin-top: 1.5rem; max-width: 52rem; }
-.verify > .code + p { margin-top: 1rem; font-size: 1.05rem; color: var(--ink-soft); }
+.verify-app {
+  margin-top: 1.75rem;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.verify > .code { margin-top: 0.5rem; max-width: 52rem; }
+.verify > .aside { margin-top: 1.5rem; font-size: 1.05rem; color: var(--ink-soft); }
 
 /* Footer ------------------------------------------------------------------ */
 
@@ -409,6 +446,8 @@ main > .entry + .radio { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
   font-family: var(--sans);
   font-size: 1.02rem;
 }
+.footer-about { flex-basis: 100%; max-width: var(--measure); }
+.footer-about p:not(.footer-name) { margin-top: 0.35rem; color: var(--ink-soft); }
 .footer-name { font-family: var(--serif); font-weight: 700; font-size: 1.2rem; }
 .footer-links { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; }
 .footer-fine { margin-left: auto; color: var(--ink-soft); }
@@ -417,7 +456,8 @@ main > .entry + .radio { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
 
 @media (max-width: 52rem) {
   .app { grid-template-columns: minmax(0, 1fr); }
-  .radio-features { grid-template-columns: minmax(0, 1fr); }
+  .radio-features,
+  .radio-detail .facts { grid-template-columns: minmax(0, 1fr); }
   .radio-shot { margin-inline: 0; }
   .footer-fine { margin-left: 0; flex-basis: 100%; }
 }

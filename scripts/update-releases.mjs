@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 // Refresh the release details in site/index.html from GitHub.
 //
-// The page marks two kinds of region:
-//   <!-- release OWNER/REPO --> ... <!-- /release -->
-//       version line and Download button (or a "no release yet" line)
+// The page marks three kinds of region, each naming a repository:
+//   <!-- version OWNER/REPO --> ... <!-- /version -->
+//       "0.1.6, released November 16, 2026" or "Not released yet"
+//   <!-- download OWNER/REPO --> ... <!-- /download -->
+//       direct links to the installer and portable zip, with sizes, and
+//       the unsigned-build note (or how to build from source)
 //   <!-- verify OWNER/REPO --> ... <!-- /verify -->
-//       the Get-FileHash / gh attestation commands for the latest installer
+//       Get-FileHash and gh attestation commands for the main download
 //
 // Usage: node scripts/update-releases.mjs [path/to/index.html]
 // Set GITHUB_TOKEN to raise the API rate limit (CI does this).
@@ -21,7 +24,7 @@ const headers = { Accept: "application/vnd.github+json", "User-Agent": "tuigse-s
 if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
 
 const cache = new Map();
-async function latestRelease(repo) {
+function latestRelease(repo) {
   if (!cache.has(repo)) {
     cache.set(repo, (async () => {
       const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`, { headers });
@@ -33,51 +36,61 @@ async function latestRelease(repo) {
   return cache.get(repo);
 }
 
-const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const dateFmt = new Intl.DateTimeFormat("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+const mb = (bytes) => `${(bytes / 1048576).toFixed(1)} MB`;
 
-function versionOf(rel) {
-  return rel.tag_name.replace(/^v/i, "");
+// 64-bit Windows downloads; 32-bit builds stay on the release page.
+function windowsAssets(rel) {
+  const assets = rel?.assets ?? [];
+  return {
+    installer: assets.find((a) => /-x86_64-setup\.exe$/i.test(a.name)),
+    zip: assets.find((a) => /-x86_64-windows\.zip$/i.test(a.name)),
+  };
 }
 
-function pickInstaller(rel) {
-  const names = (rel.assets ?? []).map((a) => a.name);
-  return names.find((n) => /-x86_64-setup\.exe$/i.test(n))
-      ?? names.find((n) => /-x86_64-windows\.zip$/i.test(n))
-      ?? names.find((n) => /\.(exe|zip|msi)$/i.test(n));
-}
+const render = {
+  version(repo, rel) {
+    if (!rel) return "Not released yet";
+    return `${esc(rel.tag_name.replace(/^v/i, ""))}, released ${dateFmt.format(new Date(rel.published_at))}`;
+  },
 
-function releaseBlock(repo, rel, indent) {
-  if (!rel) {
-    return `${indent}<p class="release">No release yet. You can build it from source today.</p>`;
-  }
-  const when = dateFmt.format(new Date(rel.published_at));
-  const hasWindows = Boolean(pickInstaller(rel));
-  const lines = [`${indent}<p class="release">Version ${esc(versionOf(rel))}, released ${when}</p>`];
-  if (hasWindows) {
-    lines.push(`${indent}<a class="button" href="https://github.com/${repo}/releases/latest">Download for Windows</a>`);
-  } else {
-    lines.push(`${indent}<a class="button" href="https://github.com/${repo}/releases/latest">Release notes</a>`);
-  }
-  return lines.join("\n");
-}
+  download(repo, rel, indent) {
+    const i = indent;
+    if (!rel) {
+      return `${i}<p class="note">No release yet. <a href="https://github.com/${repo}#readme">Build it from source</a> with a current Rust toolchain.</p>`;
+    }
+    const { installer, zip } = windowsAssets(rel);
+    const lines = [];
+    if (installer || zip) {
+      lines.push(`${i}<p class="downloads">`);
+      if (installer) lines.push(`${i}  <a class="button" href="${esc(installer.browser_download_url)}">Download installer <span class="size">(${mb(installer.size)})</span></a>`);
+      if (zip) {
+        const cls = installer ? "button button-quiet" : "button";
+        const label = installer ? "Portable zip" : "Download portable zip";
+        lines.push(`${i}  <a class="${cls}" href="${esc(zip.browser_download_url)}">${label} <span class="size">(${mb(zip.size)})</span></a>`);
+      }
+      lines.push(`${i}</p>`);
+      lines.push(`${i}<p class="note">Not code-signed yet, so Windows may show a SmartScreen warning. <a href="#verify">Check the file before you run it</a>.</p>`);
+    }
+    lines.push(`${i}<p class="note"><a href="${esc(rel.html_url)}">Release notes and all files</a></p>`);
+    return lines.join("\n");
+  },
 
-function verifyBlock(repo, rel, indent) {
-  const asset = rel && pickInstaller(rel);
-  if (!asset) return null; // keep whatever is there
-  return `${indent}<pre class="code"><code>Get-FileHash .\\${esc(asset)}
-gh attestation verify ${esc(asset)} --repo ${esc(repo)}</code></pre>`;
-}
+  verify(repo, rel, indent) {
+    const { installer, zip } = windowsAssets(rel);
+    const asset = installer ?? zip;
+    if (!asset) return null; // keep whatever is there
+    return `${indent}<pre class="code"><code>Get-FileHash .\\${esc(asset.name)}
+gh attestation verify ${esc(asset.name)} --repo ${esc(repo)}</code></pre>`;
+  },
+};
 
-const region = /(^[ \t]*)<!-- (release|verify) ([\w.-]+\/[\w.-]+) -->\n[\s\S]*?\n[ \t]*<!-- \/\2 -->/gm;
+// Block regions sit on their own lines; inline ones (version) share a line.
+const region = /<!-- (version|download|verify) ([\w.-]+\/[\w.-]+) -->([\s\S]*?)<!-- \/\1 -->/g;
 
 let html = await readFile(file, "utf8");
-const jobs = [];
-html.replace(region, (whole, indent, kind, repo) => {
-  jobs.push({ whole, indent, kind, repo });
-  return whole;
-});
+const jobs = [...html.matchAll(region)].map((m) => ({ whole: m[0], kind: m[1], repo: m[2], body: m[3] }));
 
 let changed = 0;
 let failed = 0;
@@ -90,11 +103,22 @@ for (const job of jobs) {
     failed++;
     continue;
   }
-  const body = job.kind === "release"
-    ? releaseBlock(job.repo, rel, job.indent)
-    : verifyBlock(job.repo, rel, job.indent);
-  if (body == null) continue;
-  const next = `${job.indent}<!-- ${job.kind} ${job.repo} -->\n${body}\n${job.indent}<!-- /${job.kind} -->`;
+  const block = job.body.startsWith("\n");
+  let next;
+  if (block) {
+    // Look the region up in the current text: earlier replacements shift
+    // everything after them.
+    const at = html.indexOf(job.whole);
+    const lineStart = html.lastIndexOf("\n", at) + 1;
+    const indent = html.slice(lineStart, at);
+    const body = render[job.kind](job.repo, rel, indent);
+    if (body == null) continue;
+    next = `<!-- ${job.kind} ${job.repo} -->\n${body}\n${indent}<!-- /${job.kind} -->`;
+  } else {
+    const body = render[job.kind](job.repo, rel, "");
+    if (body == null) continue;
+    next = `<!-- ${job.kind} ${job.repo} -->${body}<!-- /${job.kind} -->`;
+  }
   if (next !== job.whole) {
     html = html.replace(job.whole, () => next);
     changed++;
