@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Tuigse</title>
+  <meta name="description" content="Tuigse LLC makes OpenCB Radio, a CB radio for the browser, and free open-source apps for Windows and Linux: Hivemend, Topos and OpenIRC.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f2f5f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1c19" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://tuigse.org/">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tuigse.org/">
+  <meta property="og:title" content="Tuigse">
+  <meta property="og:description" content="OpenCB Radio, a CB radio for the browser, and free open-source apps for Windows and Linux.">
+  <meta property="og:image" content="https://tuigse.org/assets/img/opencb-radio.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="assets/fonts/alegreya-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Tuigse home">
+      <img src="assets/img/tuigse-emblem-256.png" width="40" height="40" alt="">
+      <span>Tuigse</span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#opencb">OpenCB Radio</a>
+      <a href="#apps">Apps</a>
+      <a href="https://github.com/Tuigse-oss">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="entry" aria-labelledby="headword">
+      <div class="entry-word">
+        <h1 id="headword" class="headword" lang="ga">tuigse</h1>
+        <p class="entry-grammar"><span class="pron" aria-label="pronounced tig-shuh">TIG-shuh</span> <i>Irish, noun</i></p>
+        <p class="gloss">understanding; discernment.</p>
+      </div>
+      <p class="lede">Tuigse LLC makes software that explains itself: a CB radio that runs in your browser, and free apps for Windows and Linux whose source, builds and behavior anyone can check.</p>
+    </section>
+
+    <section id="opencb" class="radio" aria-labelledby="opencb-title">
+      <div class="radio-intro">
+        <div>
+          <h2 id="opencb-title">OpenCB Radio</h2>
+          <p class="summary">A CB radio in your browser. Set your location, pick one of 40 channels, hold to talk, and hear the stations in range.</p>
+        </div>
+        <p class="actions"><a class="button" href="https://radio.opencbradio.com/">Open the radio</a></p>
+      </div>
+      <figure class="radio-shot">
+        <img src="assets/img/opencb-radio.jpg" width="2368" height="804"
+             alt="The OpenCB Ranger 2000DX faceplate: a red display reading 27.1850 MHz, signal and mic meters, channel 19 on standby, and knobs for volume, squelch and RF gain.">
+      </figure>
+      <ul class="features radio-features">
+        <li>Channel 9 for emergencies, 19 for the highway, and 6 for skip calling.</li>
+        <li>Who you hear depends on distance and on propagation conditions, as on a real set.</li>
+        <li>NOAA weather and alerts for where you are, plus traffic alerts on the map.</li>
+        <li>AM, LSB and USB, with the meters and knobs of a classic base station.</li>
+        <li>Works on phones and desktops, with nothing to install.</li>
+      </ul>
+    </section>
+
+    <section id="apps" class="apps" aria-labelledby="apps-title">
+      <div class="apps-intro">
+        <h2 id="apps-title">Open-source apps</h2>
+        <p class="summary">Free on GitHub under the MIT or Apache-2.0 license. No telemetry, accounts, ads or subscriptions.</p>
+      </div>
+
+      <article class="app" id="hivemend" aria-labelledby="hivemend-title">
+        <div class="app-copy">
+          <h3 id="hivemend-title">Hivemend</h3>
+          <p class="app-kind">Registry cleaner for Windows 10 and 11</p>
+          <p>Finds registry entries, shortcuts and temp files left behind by programs you have removed, and shows you each one before anything changes.</p>
+          <ul class="features">
+            <li>Saves every entry to a .reg backup before removing it, inside its own registry transaction. Restore puts it back.</li>
+            <li>Leaves alone anything it cannot prove is stale.</li>
+            <li>Also manages startup items, installed programs, services, disk space and duplicate files.</li>
+            <li>Contains no networking code.</li>
+          </ul>
+          <div class="get">
+            <!-- release Tuigse-oss/HiveMend -->
+            <p class="release">Version 0.1.6, released November 16, 2026</p>
+            <a class="button" href="https://github.com/Tuigse-oss/HiveMend/releases/latest">Download for Windows</a>
+            <!-- /release -->
+            <a class="source" href="https://github.com/Tuigse-oss/HiveMend">Source on GitHub</a>
+          </div>
+          <p class="also">Or install with <a href="https://scoop.sh">Scoop</a>:</p>
+          <pre class="code"><code>scoop bucket add hivemend <span class="nowrap">https://github.com/Tuigse-oss/scoop-hivemend</span>
+scoop install hivemend</code></pre>
+        </div>
+        <figure class="app-shot">
+          <img src="assets/img/hivemend-wiki-home.png" width="1024" height="681" loading="lazy"
+               alt="Hivemend's home page: a Scan now button above tools for Privacy, Startup, Programs, Disk Space, Duplicates, Services, Quick Scan, Monitor and Restore.">
+        </figure>
+      </article>
+
+      <article class="app" id="topos" aria-labelledby="topos-title">
+        <div class="app-copy">
+          <h3 id="topos-title">Topos</h3>
+          <p class="app-kind">Disk-space treemap for Windows 10 and 11</p>
+          <p>Shows every folder and file on a drive as a tile sized by the space it takes, nested inside its folder. Zoom in like a map, then open or delete straight from it.</p>
+          <ul class="features">
+            <li>Scans a whole C: drive, 2.2 million files, in about four seconds.</li>
+            <li>Colors tiles by depth or by file type: video, audio, images, archives and more.</li>
+            <li>Deletes only to the Recycle Bin, after asking.</li>
+            <li>A 1.8 MB native program, 64-bit and 32-bit, with no network code.</li>
+          </ul>
+          <div class="get">
+            <!-- release Tuigse-oss/Topos -->
+            <p class="release">No release yet. You can build it from source today.</p>
+            <!-- /release -->
+            <a class="source" href="https://github.com/Tuigse-oss/Topos">Source on GitHub</a>
+          </div>
+        </div>
+        <figure class="app-shot">
+          <picture>
+            <source srcset="assets/img/topos-dark.png" media="(prefers-color-scheme: dark)">
+            <img src="assets/img/topos-light.png" width="1296" height="839" loading="lazy"
+                 alt="Topos showing C:\Windows as a nested treemap, with WinSxS, System32, Installer and assembly as the largest tiles.">
+          </picture>
+        </figure>
+      </article>
+
+      <article class="app app-text-only" id="openirc" aria-labelledby="openirc-title">
+        <div class="app-copy">
+          <h3 id="openirc-title">OpenIRC</h3>
+          <p class="app-kind">IRC client for Windows and Linux</p>
+          <p>A native desktop client that keeps your servers, channels and private chats in one window, with a nick list and a docked panel for highlights.</p>
+          <div class="get">
+            <!-- release Tuigse-oss/OpenIRC -->
+            <p class="release">Version 0.1.0, released November 16, 2026</p>
+            <a class="button" href="https://github.com/Tuigse-oss/OpenIRC/releases/latest">Download for Windows</a>
+            <!-- /release -->
+            <a class="source" href="https://github.com/Tuigse-oss/OpenIRC">Source on GitHub</a>
+          </div>
+        </div>
+        <ul class="features features-wide">
+          <li>TLS with per-host certificate pinning, SASL, NickServ and client certificates.</li>
+          <li>DCC chat and file transfers, with resume and passive mode.</li>
+          <li>Scripting with events, aliases, popups and timers, and an editor with a debug view.</li>
+          <li>Logs with a browser, a URL catcher, and search across every window.</li>
+          <li>Tab completion, spell check, and command history kept between sessions.</li>
+          <li>In English, German, Spanish, French and Brazilian Portuguese.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section id="verify" class="verify" aria-labelledby="verify-title">
+      <h2 id="verify-title">Check a download before you run it</h2>
+      <p>Each release is built by public CI from a tagged commit, and published with a <code>SHA256SUMS.txt</code> file and a GitHub build attestation. The apps are not code-signed yet, so Windows SmartScreen may warn you. These commands confirm that the file is the one the repository built:</p>
+      <!-- verify Tuigse-oss/HiveMend -->
+      <pre class="code"><code>Get-FileHash .\Hivemend-v0.1.6-x86_64-setup.exe
+gh attestation verify Hivemend-v0.1.6-x86_64-setup.exe --repo Tuigse-oss/HiveMend</code></pre>
+      <!-- /verify -->
+      <p>The first prints a hash to compare with <code>SHA256SUMS.txt</code> on the release page. The second needs the <a href="https://cli.github.com">GitHub CLI</a>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-name">Tuigse LLC</p>
+    <ul class="footer-links">
+      <li><a href="mailto:bwilliamson@tuigse.org">bwilliamson@tuigse.org</a></li>
+      <li><a href="https://github.com/Tuigse-oss">github.com/Tuigse-oss</a></li>
+      <li><a href="https://radio.opencbradio.com/">radio.opencbradio.com</a></li>
+    </ul>
+    <p class="footer-fine">© 2026 Tuigse LLC</p>
+  </footer>
+</body>
+</html>
