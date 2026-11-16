@@ -225,10 +225,14 @@ h2 {
 /* Entry (hero) ------------------------------------------------------------ */
 
 .entry {
-  padding-top: clamp(3rem, 9vw, 7.5rem);
+  padding-top: clamp(2rem, 6vw, 4.5rem);
   display: grid;
   grid-template-columns: minmax(0, 1fr);
 }
+
+/* The emblem only appears beside the entry on wide screens; on narrow
+   ones the header's copy is close enough. */
+.entry-mark { display: none; }
 
 @media (min-width: 64rem) {
   .entry {
@@ -238,7 +242,16 @@ h2 {
     column-gap: clamp(3rem, 8vw, 7rem);
   }
   .entry .lede { margin-top: 0; margin-bottom: 0.55rem; }
+  .entry-mark {
+    display: block;
+    width: 128px;
+    height: 128px;
+    margin-bottom: 1.75rem;
+  }
 }
+
+/* The hero sits closer to the radio so the faceplate starts above the fold. */
+main > .entry + .radio { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
 
 .headword {
   font-size: clamp(5rem, 2.4rem + 13vw, 12.5rem);
@@ -315,8 +328,8 @@ h2 {
   padding-top: 3rem;
   border-top: 1px solid var(--rule);
   display: grid;
-  grid-template-columns: minmax(0, 30rem) minmax(0, 1fr);
-  gap: 2.5rem clamp(2rem, 5vw, 4.5rem);
+  grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+  gap: 2.5rem clamp(2rem, 4vw, 3.5rem);
   align-items: start;
 }
 .apps-intro + .app { margin-top: 3rem; }
@@ -356,6 +369,18 @@ h2 {
   width: 100%;
   border: 1px solid var(--rule);
   border-radius: 6px;
+}
+.app-shot a { display: block; border-radius: 6px; }
+.app-shot a:hover img { border-color: var(--verdigris); }
+
+@media (min-width: 52.01rem) {
+  /* Wider than the text column, reaching into the right margin, and kept
+     in view while the longer copy beside it scrolls. */
+  .app-shot {
+    position: sticky;
+    top: 1.5rem;
+    margin-right: calc(var(--gutter) * -0.5);
+  }
 }
 
 .app-text-only .features-wide {
