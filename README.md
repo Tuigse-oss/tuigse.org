@@ -60,11 +60,19 @@ screenshot in `site/assets/img/`, and run the script.
 
 ## Deploying
 
-Pushing to `main` deploys to GitHub Pages. The custom domain is set in the
-repository's Pages settings, not with a `CNAME` file, because the site is
-published by a workflow.
+Pushing to `main` deploys to GitHub Pages. The custom domain (`tuigse.org`)
+is set in the repository's Pages settings, not with a `CNAME` file, because
+the site is published by a workflow.
 
-DNS for tuigse.org (Cloudflare, DNS only):
+### Cloudflare in front of GitHub Pages
+
+GitHub Pages builds and serves the site; Cloudflare proxies every request to
+it. Visitors get Cloudflare's certificate, which covers `tuigse.org` and
+`*.tuigse.org`. Cloudflare is there because GitHub never issued a
+certificate for `www`, and without one it would not turn on its own
+"Enforce HTTPS".
+
+DNS for tuigse.org, all **Proxied** (orange cloud):
 
 | Type | Name | Value |
 | --- | --- | --- |
@@ -77,3 +85,23 @@ DNS for tuigse.org (Cloudflare, DNS only):
 | AAAA | `tuigse.org` | `2606:50c0:8002::153` |
 | AAAA | `tuigse.org` | `2606:50c0:8003::153` |
 | CNAME | `www` | `tuigse-oss.github.io` |
+
+These are GitHub Pages' published addresses, not a private server, so there
+is nothing to hide in them.
+
+Cloudflare settings for the tuigse.org zone:
+
+| Setting | Value | Why |
+| --- | --- | --- |
+| SSL/TLS encryption mode | **Full** (not Full (strict)) | Keeps the Cloudflare-to-GitHub hop encrypted, and keeps working if GitHub's own certificate for `tuigse.org` lapses; GitHub may not renew it while the records are proxied |
+| Always Use HTTPS | On | Redirects `http://` to `https://`, in place of GitHub's "Enforce HTTPS" |
+| Redirect Rule "www to root" | `http*://www.tuigse.org/*` → `https://tuigse.org/${2}`, 301, query string kept | Sends `www` to the main address |
+
+Don't switch the records back to DNS only: `http://` would stop redirecting
+and `www` would show a certificate error. After a deploy, Cloudflare may
+serve cached images and styles for up to about 10 minutes.
+
+Verify the domain for the Tuigse-oss organization (org Settings > Pages >
+Add a domain, then a `_github-pages-challenge-Tuigse-oss` TXT record in
+Cloudflare). That stops anyone else from claiming `tuigse.org` for their own
+Pages site if this one is ever unpublished.
